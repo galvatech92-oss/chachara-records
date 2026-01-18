@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Corregido el título con entidades HTML para evitar errores de codificación -->
+    <title>CH&Aacute;CHARA R&Eacute;CORDZ | Presskit Oficial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --neon-pink: #ff0099;
+            --neon-green: #ccff00;
+            --neon-blue: #00f3ff;
+            --neon-yellow: #fff200;
+            --dark-bg: #0a0a0a;
+            --noise-color: rgba(255, 0, 153, 0.05);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            width: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, .big-text {
+            font-family: 'Anton', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .handwritten {
+            font-family: 'Permanent Marker', cursive;
+            color: var(--neon-yellow);
+            transform: rotate(-2deg);
+        }
+
+        /* Noise Background - Optimized for Mobile */
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-pink);
+            border-radius: 4px;
+        }
+
+        /* Glitch Effect */
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .glitch {
+            position: relative;
+            color: white;
+            mix-blend-mode: hard-light;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--neon-pink);
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--neon-green);
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(11px, 9999px, 86px, 0); }
+            20% { clip: rect(93px, 9999px, 14px, 0); }
+            40% { clip: rect(35px, 9999px, 114px, 0); }
+            60% { clip: rect(10px, 9999px, 59px, 0); }
+            80% { clip: rect(52px, 9999px, 22px, 0); }
+            100% { clip: rect(69px, 9999px, 84px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            20% { clip: rect(2px, 9999px, 78px, 0); }
+            40% { clip: rect(94px, 9999px, 2px, 0); }
+            60% { clip: rect(32px, 9999px, 51px, 0); }
+            80% { clip: rect(8px, 9999px, 10px, 0); }
+            100% { clip: rect(44px, 9999px, 66px, 0); }
+        }
+
+        /* Brutalist Box & Interactions */
+        .brutal-box {
+            border: 4px solid white;
+            box-shadow: 6px 6px 0px var(--neon-pink); /* Reduced shadow for mobile */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            will-change: transform;
+        }
+        
+        @media (min-width: 768px) {
+            .brutal-box {
+                box-shadow: 10px 10px 0px var(--neon-pink);
+            }
+            .brutal-box:hover {
+                transform: translate(-4px, -4px);
+                box-shadow: 16px 16px 0px var(--neon-green);
+            }
+        }
+
+        .brutal-box-alt {
+            border: 4px solid var(--neon-blue);
+            box-shadow: 6px 6px 0px var(--neon-yellow);
+        }
+        @media (min-width: 768px) {
+             .brutal-box-alt {
+                box-shadow: 8px 8px 0px var(--neon-yellow);
+             }
+        }
+
+        /* Marquee */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+        }
+        .marquee-content {
+            display: inline-block;
+            will-change: transform;
+            animation: marquee 15s linear infinite; /* Faster on mobile */
+        }
+        @media (min-width: 768px) {
+            .marquee-content {
+                animation: marquee 25s linear infinite;
+            }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Placeholder Pattern */
+        .placeholder-pattern {
+            background-color: #222;
+            background-image: repeating-linear-gradient(45deg, #222 25%, transparent 25%, transparent 75%, #222 75%, #222), repeating-linear-gradient(45deg, #222 25%, #111 25%, #111 75%, #222 75%, #222);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+
+        /* Mobile Utility */
+        .touch-manipulation {
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body class="selection:bg-pink-500 selection:text-white">
+
+    <!-- Noise Overlay -->
+    <div class="noise-bg"></div>
+
+    <!-- Sticky Nav / Header -->
+    <nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b-2 border-white flex justify-between items-center px-4 py-3 md:py-2 shadow-lg">
+        <div class="text-xl md:text-xl font-bold tracking-tighter hover:text-pink-500 transition-colors cursor-pointer" onclick="window.scrollTo(0,0)">CHÁCHARA.REC</div>
+        <div class="hidden md:flex gap-6 text-sm font-bold">
+            <a href="#bio" class="hover:text-yellow-400 uppercase transition-colors">Quiénes</a>
+            <a href="#sets" class="hover:text-green-400 uppercase transition-colors">Música</a>
+            <a href="#dates" class="hover:text-blue-400 uppercase transition-colors">Fechas</a>
+            <a href="#contact" class="hover:text-pink-500 uppercase transition-colors">Booking</a>
+        </div>
+        <a href="#contact" class="bg-white text-black px-4 py-1.5 font-bold hover:bg-pink-500 hover:text-white transition-colors border-2 border-transparent hover:border-white uppercase text-xs md:text-sm shadow-[2px_2px_0px_#ff0099]">
+            Contratar
+        </a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-16">
+        <!-- Abstract Background Elements -->
+        <div class="absolute top-1/4 left-0 w-64 h-64 bg-pink-600 rounded-full blur-[80px] md:blur-[100px] opacity-30"></div>
+        <div class="absolute bottom-1/4 right-0 w-80 h-80 bg-blue-600 rounded-full blur-[80px] md:blur-[100px] opacity-30"></div>
+        
+        <!-- Rotating Elements -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10 pointer-events-none flex justify-center items-center overflow-hidden">
+            <div class="w-[120vw] h-[120vw] md:w-[80vw] md:h-[80vw] border-[1px] border-white rounded-full animate-[spin_10s_linear_infinite]"></div>
+            <div class="absolute w-[90vw] h-[90vw] md:w-[60vw] md:h-[60vw] border-[1px] border-dashed border-white rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+        </div>
+
+        <div class="text-center z-10 px-4 w-full">
+            <p class="hero-anim text-green-400 font-bold tracking-[0.2em] mb-4 text-xs md:text-base animate-pulse">DESDE ECATEPEC, EDO. MÉX.</p>
+            
+            <div class="glitch-wrapper mb-2 block">
+                <h1 class="hero-anim glitch text-[15vw] md:text-9xl font-black leading-[0.85] md:leading-none tracking-tighter" data-text="CHÁCHARA">CHÁCHARA</h1>
+            </div>
+            <div class="glitch-wrapper mb-8 block">
+                <h1 class="hero-anim glitch text-[15vw] md:text-9xl font-black leading-[0.85] md:leading-none tracking-tighter text-outline-white text-transparent" style="-webkit-text-stroke: 1px white; color: transparent;" data-text="RÉCORDZ">RÉCORDZ</h1>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 md:gap-4 mt-8 md:mt-8 px-2">
+                <span class="hero-tag bg-white text-black px-3 py-1 font-bold uppercase rotate-2 text-sm md:text-base shadow-lg">Cumbia</span>
+                <span class="hero-tag bg-pink-500 text-white px-3 py-1 font-bold uppercase -rotate-2 text-sm md:text-base shadow-lg">Reggaetón</span>
+                <span class="hero-tag bg-yellow-400 text-black px-3 py-1 font-bold uppercase rotate-1 text-sm md:text-base shadow-lg">Techno</span>
+                <span class="hero-tag bg-blue-500 text-black px-3 py-1 font-bold uppercase -rotate-3 text-sm md:text-base shadow-lg">Rarezas</span>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 md:bottom-10 animate-bounce">
+            <i data-lucide="arrow-down" class="w-6 h-6 md:w-8 md:h-8"></i>
+        </div>
+    </header>
+
+    <!-- Marquee Separator -->
+    <div class="bg-pink-600 text-black py-2 md:py-3 border-y-4 border-black marquee-container rotate-1 z-20 relative shadow-xl">
+        <div class="marquee-content text-xl md:text-2xl font-bold font-['Anton'] uppercase px-4">
+            JOYAS DE TIANGUIS /// CRATE DIGGERS /// SONIDO PERIFÉRICO /// VINILOS SUCIOS /// MÁSCARAS Y AGUJAS /// JOYAS DE TIANGUIS /// CRATE DIGGERS /// SONIDO PERIFÉRICO /// VINILOS SUCIOS /// MÁSCARAS Y AGUJAS ///
+        </div>
+    </div>
+
+    <!-- BIO SECTION -->
+    <section id="bio" class="py-16 md:py-24 px-4 max-w-7xl mx-auto overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <!-- Image Area -->
+            <div class="reveal-left relative group mx-auto w-full max-w-md md:max-w-full">
+                <div class="absolute inset-0 bg-blue-500 translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4 border-2 border-white"></div>
+                <!-- Placeholder for Duo Photo -->
+                <div class="relative bg-zinc-800 aspect-[4/5] border-2 border-white flex items-center justify-center overflow-hidden z-10">
+                    <img src="DUO.jpg" alt="Cháchara Récordz Duo" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                </div>
+                <!-- Sticker Decor -->
+                <div class="sticker-rotate absolute -top-4 -right-2 md:-top-6 md:-right-6 w-20 h-20 md:w-24 md:h-24 bg-yellow-400 rounded-full flex items-center justify-center font-black text-black border-2 border-black shadow-[3px_3px_0px_white] z-20">
+                    <span class="text-center leading-none text-[10px] md:text-sm">ORIGEN<br>ECATEPEC</span>
+                </div>
+            </div>
+
+            <!-- Text Content -->
+            <div class="reveal-right text-center md:text-left">
+                <h2 class="text-5xl md:text-6xl mb-6 text-pink-500 leading-none">MÁSCARAS,<br><span class="text-white">AGUJAS Y VINILOS</span></h2>
+                
+                <div class="bg-zinc-900/80 p-5 md:p-6 border-l-4 border-green-400 mb-6 backdrop-blur-sm text-left">
+                    <p class="text-base md:text-xl leading-relaxed font-bold">
+                        Cháchara Récordz es un dueto de selectores nacido en Ecatepec que vive entre máscaras, agujas y vinilos. Buscan joyas musicales en los tianguis de la periferia de la CDMX.
+                    </p>
+                </div>
+
+                <p class="text-gray-300 mb-8 leading-relaxed text-sm md:text-base text-justify">
+                    En un mar de selectores que enriquecen una escena emergente, Cháchara Récordz busca consolidarse como un acto que destaca por su curaduría: esas rarezas musicales que aparecen en el momento exacto y ponen el clímax en medio de la fiesta. Lo suyo es la sorpresa: cuando crees que ya lo escuchaste todo, ellos encuentran otra vuelta… y la pista lo nota.
+                </p>
+
+                <!-- Members -->
+                <div class="grid grid-cols-2 gap-4 mt-8">
+                    <div class="member-card text-center transform transition-transform hover:-translate-y-1">
+                        <div class="w-full aspect-square bg-zinc-800 border-2 border-white mb-2 overflow-hidden relative group">
+                            <img src="josh.jfif" alt="Josh" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                        </div>
+                        <h3 class="text-xl text-yellow-400">JOSH</h3>
+                        <span class="text-xs uppercase tracking-widest text-gray-400">Selector / DJ</span>
+                    </div>
+                    <div class="member-card text-center transform transition-transform hover:-translate-y-1">
+                        <div class="w-full aspect-square bg-zinc-800 border-2 border-white mb-2 overflow-hidden relative group">
+                             <img src="lazaro.jfif" alt="Lázaro" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                        </div>
+                        <h3 class="text-xl text-blue-400">L&Aacute;ZARO</h3>
+                        <span class="text-xs uppercase tracking-widest text-gray-400">Selector / DJ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SETS & EXPERIENCE -->
+    <section id="sets" class="py-16 md:py-20 bg-zinc-900 border-y border-gray-800 relative overflow-hidden">
+        <!-- Background Decor -->
+        <div class="absolute -right-20 top-10 text-[10rem] md:text-[20rem] font-black text-white opacity-[0.03] pointer-events-none select-none rotate-90 md:rotate-0 origin-right">
+            SETS
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <h2 class="reveal-up text-4xl md:text-6xl mb-12 text-center leading-tight">LA EXPERIENCIA <span class="text-green-400 italic">SONORA</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <!-- Main Set -->
+                <div class="brutal-box bg-black p-6 md:p-8 relative mt-4 md:mt-0">
+                    <div class="absolute -top-3 left-4 bg-pink-600 text-white px-2 py-1 text-sm font-bold uppercase shadow-md">Club / Fiesta</div>
+                    <h3 class="text-2xl md:text-3xl mb-4 mt-2">SET PRINCIPAL</h3>
+                    <ul class="space-y-4 text-sm md:text-base">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="disc" class="text-pink-500 mt-1 shrink-0 w-5 h-5"></i>
+                            <span><strong class="text-white">Viaje Bailable:</strong> Transiciones de energía cruda. Cumbia ? Reggaetón ? House ? Techno.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="sparkles" class="text-pink-500 mt-1 shrink-0 w-5 h-5"></i>
+                            <span><strong class="text-white">Factor Sorpresa:</strong> Joyas de tianguis y mezclas que nadie espera.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Alt Sets -->
+                <div class="brutal-box-alt bg-black p-6 md:p-8 relative mt-4 md:mt-0">
+                    <div class="absolute -top-3 left-4 bg-blue-600 text-black px-2 py-1 text-sm font-bold uppercase shadow-md">Temáticos</div>
+                    <h3 class="text-2xl md:text-3xl mb-4 mt-2">SETS ALTERNOS</h3>
+                    <div class="space-y-4">
+                        <div class="border-b border-gray-800 pb-2">
+                            <h4 class="text-yellow-400 font-bold text-base md:text-lg">Cumbia & Perreo Raro</h4>
+                            <p class="text-xs md:text-sm text-gray-400">Sabor latino denso y underground.</p>
+                        </div>
+                        <div class="border-b border-gray-800 pb-2">
+                            <h4 class="text-blue-400 font-bold text-base md:text-lg">Midnight Techno</h4>
+                            <p class="text-xs md:text-sm text-gray-400">Oscuridad bailable y ritmos industriales.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-green-400 font-bold text-base md:text-lg">Tianguis Selection</h4>
+                            <p class="text-xs md:text-sm text-gray-400">Classics + Rare Cuts (Solo Vinilo).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Rider Mini -->
+            <div class="reveal-up mt-12 md:mt-16 text-center">
+                <p class="text-gray-500 text-[10px] md:text-xs uppercase tracking-widest mb-3">Requerimientos Técnicos Ideales</p>
+                <div class="inline-flex gap-4 md:gap-8 flex-wrap justify-center font-mono text-xs md:text-sm text-gray-300 border border-gray-700 px-4 md:px-6 py-3 rounded-full bg-black/50 backdrop-blur-sm">
+                    <span class="flex items-center gap-2"><i data-lucide="circle-dot" class="w-4 h-4 text-pink-500"></i> 2 Tornamesas</span>
+                    <span class="flex items-center gap-2"><i data-lucide="sliders" class="w-4 h-4 text-green-500"></i> Mixer DJ</span>
+                    <span class="flex items-center gap-2"><i data-lucide="speaker" class="w-4 h-4 text-blue-500"></i> Monitoreo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEOS SECTION -->
+    <section class="py-16 md:py-20 px-4 max-w-7xl mx-auto overflow-hidden">
+        <div class="flex items-center gap-4 mb-12 reveal-up">
+            <h2 class="text-5xl md:text-6xl text-white">EN VIVO</h2>
+            <div class="h-1 flex-grow bg-red-600 animate-pulse"></div>
+            <span class="text-red-500 font-mono text-xl animate-pulse whitespace-nowrap">? REC</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
+            <!-- Video 1: Ese Lacho Tarzanon ft Chachara Records DJ Session X Discostrut -->
+            <a href="https://youtu.be/q30UrYeYgTA?si=_zVms0idn-n_wLEr" target="_blank" class="video-card group cursor-pointer touch-manipulation block">
+                <div class="aspect-video bg-zinc-800 border-2 border-red-500 relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(255,0,0,0.5)] transition-all">
+                    <!-- Thumbnail Background -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('eselancho.jpeg');"></div>
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
+
+                    <!-- Play Icon -->
+                    <div class="absolute inset-0 flex items-center justify-center z-10">
+                        <i data-lucide="play-circle" class="w-16 h-16 text-white opacity-90 drop-shadow-lg group-hover:scale-110 group-hover:text-red-500 transition-all duration-300"></i>
+                    </div>
+                </div>
+                <div class="mt-3 flex justify-between items-start">
+                    <h4 class="font-bold text-base md:text-lg leading-tight group-hover:text-red-500 transition-colors line-clamp-2">Ese Lacho Tarzanon ft Chachara Records DJ Session X Discostrut</h4>
+                    <span class="text-xs font-mono text-gray-400 bg-zinc-900 px-2 py-1 whitespace-nowrap">Ver en YouTube</span>
+                </div>
+            </a>
+
+            <!-- Video 2: Guest Mix by Chachara Recordz -->
+            <a href="https://youtu.be/wDTyCrCUVmA?si=S19elilvMA7KdsfU" target="_blank" class="video-card group cursor-pointer touch-manipulation block">
+                <div class="aspect-video bg-zinc-800 border-2 border-white relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+                     <!-- Thumbnail Background -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://img.youtube.com/vi/wDTyCrCUVmA/maxresdefault.jpg');"></div>
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
+                    
+                     <div class="absolute inset-0 flex items-center justify-center z-10">
+                        <i data-lucide="play-circle" class="w-16 h-16 text-white opacity-90 drop-shadow-lg group-hover:scale-110 group-hover:text-blue-400 transition-all duration-300"></i>
+                    </div>
+                </div>
+                <div class="mt-3 flex justify-between items-start">
+                    <h4 class="font-bold text-base md:text-lg leading-tight group-hover:text-blue-400 transition-colors line-clamp-2">Guest Mix by Chachara Recordz</h4>
+                    <span class="text-xs font-mono text-gray-400 bg-zinc-900 px-2 py-1 whitespace-nowrap">Ver en YouTube</span>
+                </div>
+            </a>
+
+            <!-- Video 3: Chachara Récords / Forest Sounds Sessions/ vinyl set / Rap, Reggaeton, norteñas y mas -->
+            <a href="https://youtu.be/NfjjG4WLipY?si=esERy4-R3daP5czq" target="_blank" class="video-card group cursor-pointer touch-manipulation block">
+                <div class="aspect-video bg-zinc-800 border-2 border-white relative overflow-hidden group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+                     <!-- Thumbnail Background -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://img.youtube.com/vi/NfjjG4WLipY/maxresdefault.jpg');"></div>
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
+                    
+                     <div class="absolute inset-0 flex items-center justify-center z-10">
+                        <i data-lucide="play-circle" class="w-16 h-16 text-white opacity-90 drop-shadow-lg group-hover:scale-110 group-hover:text-green-400 transition-all duration-300"></i>
+                    </div>
+                </div>
+                <div class="mt-3 flex justify-between items-start">
+                    <h4 class="font-bold text-base md:text-lg leading-tight group-hover:text-green-400 transition-colors line-clamp-2">Chachara Récords / Forest Sounds Sessions / Vinyl Set</h4>
+                    <span class="text-xs font-mono text-gray-400 bg-zinc-900 px-2 py-1 whitespace-nowrap">Ver en YouTube</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- FLYERS / GIGS -->
+    <section id="dates" class="py-16 md:py-20 bg-zinc-950 px-4 border-t-4 border-yellow-400">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="reveal-up text-5xl md:text-8xl text-center mb-12 md:mb-16 text-outline-white text-transparent leading-[0.9]" style="-webkit-text-stroke: 1px rgba(255,255,255,0.3); color: transparent;">HISTORIAL DE<br><span class="text-yellow-400 font-['Permanent_Marker']" style="-webkit-text-stroke: 0; color: #fff200;">FIESTA</span></h2>
+            
+            <!-- Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                <!-- Flyer 1: EL RECUERDO DE MIS AMORES -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-pink-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('EL-RECUERDO-DE-MIS-AMORES.jpg');"></div>
+                    <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">EL RECUERDO DE MIS AMORES</p>
+                    </div>
+                </div>
+
+                <!-- Flyer 2: EL TALLER IZCALLI -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-green-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('EL-TALLER-IZCALLI.jpg');"></div>
+                     <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">EL TALLER IZCALLI</p>
+                    </div>
+                </div>
+
+                <!-- Flyer 3: ELEPE PUEBLA -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-blue-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('ELEPE-PUEBLA.jpg');"></div>
+                    <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">ELEPE PUEBLA</p>
+                    </div>
+                </div>
+
+                <!-- Flyer 4: FERIA VINILES -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-yellow-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('FERIA-VINILES.jpg');"></div>
+                    <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">FERIA VINILES</p>
+                    </div>
+                </div>
+
+                <!-- Flyer 5: NOCHE DE TERROR -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-pink-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('NOCHE-DE-TERROR.jpg');"></div>
+                    <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">NOCHE DE TERROR</p>
+                    </div>
+                </div>
+
+                <!-- Flyer 6: NOCHENEGRA -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-green-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('NOCHENEGRA.jpg');"></div>
+                    <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">NOCHENEGRA</p>
+                    </div>
+                </div>
+
+                <!-- Flyer 7: TXALAPARTA BAR OAXACA -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-blue-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('TXALAPARTA-BAR-OAXACA.jfif');"></div>
+                    <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">TXALAPARTA BAR OAXACA</p>
+                    </div>
+                </div>
+
+                <!-- Flyer 8: VIEJO VAGO BRUJO -->
+                <div class="flyer-card group relative aspect-[3/4] bg-zinc-800 overflow-hidden border border-gray-800 hover:border-yellow-500 transition-colors touch-manipulation">
+                    <div class="w-full h-full bg-cover bg-center opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" style="background-image: url('VIEJO-VAGO-BRUJO.jpg');"></div>
+                    <div class="absolute bottom-0 left-0 bg-black/90 w-full py-2 px-1 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+                        <p class="text-[10px] md:text-xs font-mono text-white text-center font-bold uppercase leading-tight">VIEJO VAGO BRUJO</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reveal-up text-center mt-10">
+                <p class="text-gray-500 text-xs md:text-sm">VENUES DESTACADOS: CDMX, EDO. MEX, PUEBLA, QUERÉTARO...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT / FOOTER -->
+    <section id="contact" class="py-20 md:py-24 px-4 bg-pink-600 relative text-black overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute -left-10 -bottom-20 w-80 h-80 md:w-96 md:h-96 border-[20px] border-black rounded-full opacity-10"></div>
+        <div class="absolute -right-10 top-0 w-40 h-40 border-[10px] border-white rounded-full opacity-20"></div>
+        
+        <div class="reveal-up max-w-4xl mx-auto text-center relative z-10">
+            <h2 class="text-5xl md:text-8xl mb-8 font-black leading-none">¿ARMAMOS LA<br>FIESTA?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-12">
+                <a href="https://wa.me/525617861640" target="_blank" class="bg-black text-white p-6 hover:bg-white hover:text-black transition-all border-4 border-transparent hover:border-black group shadow-[8px_8px_0px_rgba(0,0,0,0.2)]">
+                    <div class="flex flex-col items-center">
+                        <i data-lucide="phone" class="w-10 h-10 md:w-12 md:h-12 mb-4 group-hover:rotate-12 transition-transform"></i>
+                        <span class="text-sm font-bold opacity-50 uppercase">Booking / WhatsApp</span>
+                        <span class="text-xl md:text-2xl font-bold">+52 56 1786 1640</span>
+                        <span class="text-xs mt-2">(Joshua)</span>
+                    </div>
+                </a>
+
+                <a href="mailto:chachararecordz@gmail.com" class="bg-black text-white p-6 hover:bg-white hover:text-black transition-all border-4 border-transparent hover:border-black group shadow-[8px_8px_0px_rgba(0,0,0,0.2)]">
+                    <div class="flex flex-col items-center">
+                        <i data-lucide="mail" class="w-10 h-10 md:w-12 md:h-12 mb-4 group-hover:-rotate-12 transition-transform"></i>
+                        <span class="text-sm font-bold opacity-50 uppercase">Correo Electrónico</span>
+                        <span class="text-base md:text-2xl font-bold break-all">chachararecordz@gmail.com</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex justify-center gap-8 mb-12">
+                <a href="https://www.instagram.com/chachararecordz?igsh=bDB6NG9pOTJlcmZo" target="_blank" class="hover:scale-125 transition-transform"><i data-lucide="instagram" class="w-8 h-8 md:w-10 md:h-10"></i></a>
+                <a href="https://www.facebook.com/share/1AYQmFasR4/" target="_blank" class="hover:scale-125 transition-transform"><i data-lucide="facebook" class="w-8 h-8 md:w-10 md:h-10"></i></a>
+                <a href="https://www.tiktok.com/@chachararecordz?_r=1&_t=ZS-93ACx2MNTxh" target="_blank" class="hover:scale-125 transition-transform fill-current"><svg class="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+            </div>
+
+            <p class="font-mono text-xs md:text-sm font-bold">ECATEPEC DE MORELOS, EDO. MÉXICO</p>
+            <p class="text-xs mt-4 opacity-60">© 2024 Cháchara Récordz. Todos los derechos reservados.</p>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- ANIMATIONS ---
+
+        // 1. Hero Animations (Intro)
+        const heroTl = gsap.timeline();
+        heroTl.from(".hero-anim", {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out",
+            delay: 0.2
+        })
+        .from(".hero-tag", {
+            scale: 0,
+            opacity: 0,
+            rotation: 180,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "back.out(1.7)"
+        }, "-=0.5");
+
+        // 2. Brutalist Boxes Reveal
+        gsap.utils.toArray('.brutal-box, .brutal-box-alt').forEach(box => {
+            gsap.from(box, {
+                scrollTrigger: {
+                    trigger: box,
+                    start: "top 85%",
+                    toggleActions: "play none none reverse"
+                },
+                y: 100,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power4.out"
+            });
+        });
+
+        // 3. Sticker Rotation on Scroll (Updated selector)
+        gsap.to(".sticker-rotate", {
+            scrollTrigger: {
+                trigger: "#bio",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1
+            },
+            rotation: 360,
+            ease: "none"
+        });
+
+        // 4. Reveal Left (Image)
+        gsap.utils.toArray('.reveal-left').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 80%"
+                },
+                x: -50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // 5. Reveal Right (Text)
+        gsap.utils.toArray('.reveal-right').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 80%"
+                },
+                x: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // 6. Generic Reveal Up
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 85%"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+
+        // 7. Staggered Video Cards
+        gsap.from(".video-card", {
+            scrollTrigger: {
+                trigger: "#sets", // Trigger a bit earlier
+                start: "bottom 80%" 
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2, // Time between each card
+            ease: "power2.out"
+        });
+
+        // 8. Staggered Flyer Grid (The big show)
+        gsap.from(".flyer-card", {
+            scrollTrigger: {
+                trigger: "#dates",
+                start: "top 70%"
+            },
+            scale: 0.8,
+            y: 30,
+            opacity: 0,
+            duration: 0.5,
+            stagger: {
+                amount: 1, // Total time to reveal all grid items
+                grid: "auto",
+                from: "random" // Random reveal pattern looks cooler/more chaotic
+            },
+            ease: "back.out(1.2)"
+        });
+
+        // Cursor effect (Mouse only, disabled on touch for performance)
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                const noise = document.querySelector('.noise-bg');
+                if(noise) {
+                    noise.style.transform = `translate(-${x * 15}px, -${y * 15}px)`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
